@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Thêm doanh thu</h5>
+                    <h5 class="modal-title">Thêm doanh thu✨</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Xử lý xóa với thông báo thành công/thất bại
         if (e.target.classList.contains('delete')) {
             Swal.fire({
-                title: 'Are you sure?',
+                title: 'Chắc chắn chứ?',
                 text: 'Bạn sẽ xóa doanh thu này chứ?',
                 icon: 'warning',
                 showCancelButton: true,
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 } else {
                     Swal.fire({
-                        title: 'Xóa thất bại!',
+                        title: 'Đã từ chối xóa!',
                         icon: 'error',
                         confirmButtonText: 'OK'
                     });

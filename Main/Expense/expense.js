@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return expMonth === selectedMonth && filteredExpenses[displayIndex].date === `${expMonth}-${expDay}`;
             });
             Swal.fire({
-                title: 'Are you sure?',
+                title: 'Chắc chắn chứ?',
                 text: 'Bạn sẽ xóa chi tiêu này chứ?',
                 icon: 'warning',
                 showCancelButton: true,

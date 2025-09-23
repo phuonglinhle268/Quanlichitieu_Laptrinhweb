@@ -82,8 +82,11 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.total-expenses-card,
-.expense-card,
+.total-expenses-card {
+    margin-top: 30px;
+}
+.expense-card h4,
+.total-expenses-card h4,
 .transactions-card h4 {
     margin-bottom: 20px;
     font-weight: bold;
