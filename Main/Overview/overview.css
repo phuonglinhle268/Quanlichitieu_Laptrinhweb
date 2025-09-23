@@ -1,0 +1,201 @@
+body {
+    background-color: #e9f0f7;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #1a2e5a;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+    font-weight: 500;
+}
+
+.nav-link.active {
+    font-weight: bold;
+}
+
+.dropdown {
+    margin-left: 15px;
+}
+
+.dropdown-toggle {
+    background-color: transparent;
+    border: none;
+    color: white;
+    padding: 0;
+}
+
+.dropdown-toggle:focus {
+    box-shadow: none;
+}
+
+.dropdown-menu {
+    background-color: #1a2e5a;
+    border: none;
+}
+
+.dropdown-item {
+    color: white;
+}
+
+.dropdown-item:hover {
+    background-color: #2a4e7a;
+}
+
+.container-fluid {
+    padding: 20px;
+}
+
+.row .form-control,
+.row .form-select {
+    background-color: #e9f0f7;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.budget-card h4,
+.categories-card h4,
+.transactions-card h4 {
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.budget-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-item .icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: #f8f9fa;
+    border-radius: 50%;
+    line-height: 30px;
+    margin-bottom: 5px;
+}
+
+.stat-item .value {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.stat-item .label {
+    display: block;
+    color: #666;
+}
+
+.chart-container {
+    position: relative;
+    height: 200px;
+    margin-bottom: 20px;
+}
+
+.limit-remaining {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+.limit-remaining span:nth-child(2),
+.limit-remaining span:nth-child(4) {
+    color: #007bff;
+}
+
+.categories-card .category-list {
+    margin-bottom: 20px;
+}
+
+.categories-card .category-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.categories-card .icon {
+    margin-right: 10px;
+}
+
+.transactions-card .transaction-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.transactions-card .transaction-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.transaction-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.transaction-item .icon {
+    font-size: 1.2rem;
+    width: 30px;
+    text-align: center;
+}
+
+.transaction-item .description{
+    flex: 1;
+    padding: 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.transaction-item .date {
+    width: 100px;
+    padding: 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.transaction-item .amount {
+    padding: 0 10px;
+    width:100px;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.transaction-item .actions .icon {
+    margin-left: 5px;
+    cursor: pointer;
+}

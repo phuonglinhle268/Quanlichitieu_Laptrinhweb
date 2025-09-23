@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker - Overview</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="overview.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        <h3>Expense Tracker</h3>
+        <div class="nav-links">
+            <a href="./overview.html" class="nav-link active">Overview</a>
+            <a href="../Expense/expense.html" class="nav-link">Expense</a>
+            <a href="../Revenue/revenue.html" class="nav-link">Revenue</a>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="icon">🌱</span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="#" id="logoutLink">Log out</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid p-4">
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <input type="month" class="form-control" value="2021-03" readonly>
+            </div>
+            <div class="col-md-3">
+                <select class="form-select">
+                    <option selected>All Categories</option>
+                    <option value="home">Home</option>
+                    <option value="transportation">Transportation</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="food">Food</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card budget-card">
+                    <h4>Budget</h4>
+                    <div class="budget-stats">
+                        <div class="stat-item">
+                            <span class="icon">💵</span>
+                            <span class="value">-3,600</span>
+                            <span class="label">Expenses</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="icon">💵</span>
+                            <span class="value">-3,420</span>
+                            <span class="label">Balance</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="icon">💵</span>
+                            <span class="value">180</span>
+                            <span class="label">Revenues</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="chart-container">
+                                <canvas id="budgetBarChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="chart-container">
+                                <canvas id="budgetPieChart"></canvas>
+                            </div>
+                            <div class="limit-remaining">
+                                <span>Monthly Limit</span>
+                                <span>$100,000</span>
+                                <span>Remaining</span>
+                                <span>$96,400</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card categories-card">
+                    <h4>Categories</h4>
+                    <div class="chart-container">
+                        <canvas id="categoriesChart"></canvas>
+                    </div>
+                    <div class="category-list">
+                        <div class="category-item">
+                            <span class="icon">🏠</span>
+                            <span>Home</span>
+                            <span>$0</span>
+                        </div>
+                        <div class="category-item">
+                            <span class="icon">🚐</span>
+                            <span>Transportation</span>
+                            <span>$0</span>
+                        </div>
+                        <div class="category-item">
+                            <span class="icon">😊</span>
+                            <span>Entertainment</span>
+                            <span>$0</span>
+                        </div>
+                        <div class="category-item">
+                            <span class="icon">🍴</span>
+                            <span>Food</span>
+                            <span>$3,600</span>
+                        </div>
+                        <div class="category-item">
+                            <span class="icon">✍️</span>
+                            <span>Other</span>
+                            <span>$0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card transactions-card mt-4">
+            <div class="transaction-header">
+                <h4>Transactions</h4>
+                <span>Found 5 records</span>
+            </div>
+            <div class="transaction-list">
+                <div class="transaction-item">
+                    <span class="icon">💵</span>
+                    <span class="description">salary</span>
+                    <span class="date">2021-03-01</span>
+                    <span class="amount">$60</span>
+                    <div class="actions">
+                        <span class="icon">📝</span>
+                        <span class="icon">🗑️</span>
+                    </div>
+                </div>
+                <div class="transaction-item">
+                    <span class="icon">🍴</span>
+                    <span class="description">購餐</span>
+                    <span class="date">2021-03-01</span>
+                    <span class="amount">$1,800</span>
+                    <div class="actions">
+                        <span class="icon">📝</span>
+                        <span class="icon">🗑️</span>
+                    </div>
+                </div>
+                <div class="transaction-item">
+                    <span class="icon">$</span>
+                    <span class="description">salary</span>
+                    <span class="date">2021-03-01</span>
+                    <span class="amount">$60</span>
+                    <div class="actions">
+                        <span class="icon">📝</span>
+                        <span class="icon">🗑️</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('logoutLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('loggedInUser');
+            localStorage.setItem('justLoggedOut', 'true');
+            // Chuyển hướng sang trang login
+            window.location.href = '/Login/login.html';
+        });
+    </script>
+    <script src="overview.js"></script>
+</body>
+</html>

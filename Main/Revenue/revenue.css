@@ -1,0 +1,205 @@
+body {
+    background-color: #e9f0f7;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #1a2e5a;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+    font-weight: 500;
+}
+
+.nav-link.active {
+    font-weight: bold;
+}
+
+.dropdown {
+    margin-left: 15px;
+}
+
+.dropdown-toggle {
+    background-color: transparent;
+    border: none;
+    color: white;
+    padding: 0;
+}
+
+.dropdown-toggle:focus {
+    box-shadow: none;
+}
+
+.dropdown-menu {
+    background-color: #1a2e5a;
+    border: none;
+}
+
+.dropdown-item {
+    color: white;
+}
+
+.dropdown-item:hover {
+    background-color: #2a4e7a;
+}
+
+.container-fluid {
+    padding: 20px;
+}
+
+.row .form-control,
+.row .form-select {
+    background-color: #e9f0f7;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.total-revenue-card{
+    margin-top: 30px;
+}
+
+.revenue-card h4,
+.total-revenue-card h4,
+.transactions-card h4 {
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #555;
+}
+
+.btn-revenue {
+    background-color: #FF6F91;
+    border: none;
+    padding: 10px 20px;
+    
+    color: white;
+    border-radius: 30px;
+}
+
+.btn-revenue:hover {
+    background-color: #D84355;
+}
+
+.total-revenue-card .total-amount {
+    font-size:50px;
+    font-weight: bold;
+    color: #FF5E6C;
+    text-align: center;
+    margin-top: 26px;
+    margin-bottom: 15px;
+}
+
+.transactions-card .transaction-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.transactions-card .transaction-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.transaction-item {
+    display: flex;
+    align-items: center;
+    padding: 30px 0;
+    border-bottom: 1px solid #eee;
+    min-height: 40px;
+}
+
+.transaction-item .icon {
+    font-size: 1.2rem;
+    width: 30px;
+    text-align: center;
+}
+
+.transaction-item .date {
+    width: 100px;
+    padding: 0 10px;
+    white-space: nowrap; /* Ngăn chặn xuống dòng */
+    overflow: hidden;
+    margin-left: 30px;
+    text-align: center;
+    
+}
+
+.transaction-item .category {
+    flex: 1; /* Chiếm phần còn lại */
+    padding: 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: center;
+}
+
+.transaction-item .amount {
+    width: 100px;
+    padding: 0 10px;
+    text-align: right;
+    white-space: nowrap;
+    margin-right: 30px;
+}
+
+.transaction-item .actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 10px;
+    width: 60px;
+    gap: 5px;
+}
+
+.transaction-item .actions .icon {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.modal-content .form-group {
+    margin-bottom: 15px;
+}
