@@ -57,7 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(addExpenseModal);
     const modal = new bootstrap.Modal(addExpenseModal);
 
-    // Tạo option cho các tháng trong 2025 (định dạng MM-YYYY)
+    // Tạo option cho các tháng trong 2025 và All Months
+    const allMonthsOption = document.createElement('option');
+    allMonthsOption.value = 'allMonths';
+    allMonthsOption.text = 'All Months';
+    monthSelect.appendChild(allMonthsOption);
     for (let month = 1; month <= 12; month++) {
         const monthStr = month.toString().padStart(2, '0');
         const option = document.createElement('option');
@@ -69,10 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Hàm lọc và hiển thị dữ liệu theo tháng và category
     function updateDisplay(month, category) {
-        const [selectedMonth] = month.split('-');
-        const filteredExpenses = expenses.filter(expense => {
+        let filteredExpenses = expenses.filter(expense => {
             const [expMonth] = expense.date.split('-');
-            const matchesMonth = expMonth === selectedMonth;
+            const matchesMonth = month === 'allMonths' || expMonth === month.split('-')[0];
             const matchesCategory = category === 'category' || expense.category === category;
             return matchesMonth && matchesCategory;
         });
@@ -105,8 +108,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="category">${expense.category}</span>
                     <span class="amount">${expense.amount}</span>
                     <div class="actions">
-                        <span class="icon edit" data-id="${index}">📝</span>
-                        <span class="icon delete" data-id="${index}">🗑️</span>
+                        <span class="icon edit" data-id="${index}" data-global-id="${expenses.indexOf(expense)}">📝</span>
+                        <span class="icon delete" data-id="${index}" data-global-id="${expenses.indexOf(expense)}">🗑️</span>
                     </div>
                 `;
                 transactionList.appendChild(item);
@@ -118,8 +121,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (expenses.length === 0) {
         expenses = [
             { date: '03-01', name: 'Grocery', category: 'food', amount: '$1800' },
-            { date: '03-02', name: 'Miscellaneous', category: 'other', amount: '$1800' },
-            { date: '03-03', name: 'Test', category: 'other', amount: '$0' }
+            { date: '03-01', name: 'Snack', category: 'food', amount: '$500' },
+            { date: '04-02', name: 'Miscellaneous', category: 'other', amount: '$1800' },
+            { date: '05-03', name: 'Test', category: 'other', amount: '$0' }
         ];
         localStorage.setItem('expenses', JSON.stringify(expenses));
     }
@@ -167,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const inputDate = new Date(date);
 
         // Validate
-        if (!date || inputMonth !== selectedMonth || inputDate > currentDate) {
+        if (!date || (monthSelect.value !== 'allMonths' && inputMonth !== selectedMonth) || inputDate > currentDate) {
             dateError.textContent = 'Chỉ chọn ngày trong tháng đã chọn và không quá thời gian hiện tại!!!';
             dateError.style.display = 'block';
             return;
@@ -212,13 +216,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const [selectedMonth] = monthSelect.value.split('-');
             const filteredExpenses = expenses.filter(expense => {
                 const [expMonth] = expense.date.split('-');
-                return expMonth === selectedMonth;
+                return monthSelect.value === 'allMonths' || expMonth === selectedMonth;
             });
             const displayIndex = parseInt(e.target.getAttribute('data-id'));
-            const globalIndex = expenses.findIndex(expense => {
-                const [expMonth, expDay] = expense.date.split('-');
-                return expMonth === selectedMonth && filteredExpenses[displayIndex].date === `${expMonth}-${expDay}`;
-            });
+            const globalIndex = parseInt(e.target.getAttribute('data-global-id')); // Sử dụng global-id trực tiếp
             const expense = expenses[globalIndex];
             if (expense) {
                 const [expMonth, expDay] = expense.date.split('-');
@@ -239,13 +240,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const [selectedMonth] = monthSelect.value.split('-');
             const filteredExpenses = expenses.filter(expense => {
                 const [expMonth] = expense.date.split('-');
-                return expMonth === selectedMonth;
+                return monthSelect.value === 'allMonths' || expMonth === selectedMonth;
             });
             const displayIndex = parseInt(e.target.getAttribute('data-id'));
-            const globalIndex = expenses.findIndex(expense => {
-                const [expMonth, expDay] = expense.date.split('-');
-                return expMonth === selectedMonth && filteredExpenses[displayIndex].date === `${expMonth}-${expDay}`;
-            });
+            const globalIndex = parseInt(e.target.getAttribute('data-global-id')); // Sử dụng global-id trực tiếp
             Swal.fire({
                 title: 'Chắc chắn chứ?',
                 text: 'Bạn sẽ xóa chi tiêu này chứ?',

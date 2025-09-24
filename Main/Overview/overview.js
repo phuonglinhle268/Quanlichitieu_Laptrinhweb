@@ -19,7 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const categoryList = document.getElementById('categoryList');
     const categoriesChartContainer = document.getElementById('categoriesChartContainer');
 
-    // Tạo option cho các tháng trong 2025
+    // Tạo option cho các tháng trong 2025 và All Months
+    const allMonthsOption = document.createElement('option');
+    allMonthsOption.value = 'allMonths';
+    allMonthsOption.text = 'All Months';
+    monthSelect.appendChild(allMonthsOption);
     for (let month = 1; month <= 12; month++) {
         const monthStr = month.toString().padStart(2, '0');
         const option = document.createElement('option');
@@ -74,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const limit = parseFloat(monthlyLimit.textContent.replace('$', '').replace(',', ''));
         const used = totalExpenses;
         const remaining = limit - used;
-        remainingValue.textContent = `$${remaining.toFixed(2)}`;
+        remainingValue.textContent = `$${remaining.toLocaleString()}`;
 
         budgetPie.data.datasets[0].data = [used, remaining];
         budgetPie.update();
@@ -109,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         budgetBar.data.datasets[0].data = [totalExpenses, balance, totalRevenues];
         budgetBar.update();
 
-        const allTransactions = [...filteredExpenses.map(e => ({ ...e, type: 'expense' })), ...filteredRevenues.map(r => ({ ...r, type: 'revenue' }))];
+        const allTransactions = [...filteredExpenses.map(e => ({ ...e, type: 'expense' })), ...filteredRevenues.map(r => ({ ...r, type: 'revenue', description: r.category || 'Salary' }))];
         transactionList.innerHTML = '';
         if (allTransactions.length === 0) {
             transactionList.innerHTML = '<div class="alert alert-warning">No transactions found.</div>';
@@ -124,8 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="date">${trans.date}-2025</span>
                     <span class="amount">${trans.amount}</span>
                     <div class="actions">
-                        <span class="icon edit" data-id="${index}" data-type="${trans.type}" data-index="${expenses.indexOf(trans)}">📝</span>
-                        <span class="icon delete" data-id="${index}" data-type="${trans.type}" data-index="${expenses.indexOf(trans)}">🗑️</span>
+                        <span class="icon edit" data-id="${index}" data-type="${trans.type}" data-index="${trans.type === 'expense' ? expenses.findIndex(e => e === trans) : revenues.findIndex(r => r === trans)}">📝</span>
+                        <span class="icon delete" data-id="${index}" data-type="${trans.type}" data-index="${trans.type === 'expense' ? expenses.findIndex(e => e === trans) : revenues.findIndex(r => r === trans)}">🗑️</span>
                     </div>
                 `;
                 transactionList.appendChild(item);
@@ -180,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <form id="editForm">
                                     <div class="form-group">
                                         <label for="modalDate">Date</label>
-                                        <input type="date" class="form-control" id="modalDate" value="2025-${month}-${day}">
+                                        <input type="date" class="form-control" id="modalDate" value="2025-${month}-${day || '01'}">
                                     </div>
                                     <div class="form-group">
                                         <label for="modalName">Name</label>

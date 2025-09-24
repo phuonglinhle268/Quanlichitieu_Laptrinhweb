@@ -24,7 +24,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     <form id="addRevenueForm">
                         <div class="form-group">
                             <label for="modalMonth">⌛</label>
-                            <input type="text" class="form-control" id="modalMonth" readonly>
+                            <select class="form-select" id="modalMonth">
+                                <option value="allMonths">All Months</option>
+                                ${Array.from({ length: 12 }, (_, i) => {
+                                    const monthStr = (i + 1).toString().padStart(2, '0');
+                                    return `<option value="${monthStr}-2025">${monthStr}-2025</option>`;
+                                }).join('')}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="modalDescription">👤</label>
+                            <input type="text" class="form-control" id="modalDescription" placeholder="Nhập mô tả (ví dụ: Salary)">
                         </div>
                         <div class="form-group">
                             <label for="modalAmount">💵</label>
@@ -42,6 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = new bootstrap.Modal(addRevenueModal);
 
     // Tạo option cho các tháng trong 2025 (định dạng MM-YYYY)
+    const allMonthsOption = document.createElement('option');
+    allMonthsOption.value = 'allMonths';
+    allMonthsOption.text = 'All Months';
+    monthSelect.appendChild(allMonthsOption);
     for (let month = 1; month <= 12; month++) {
         const monthStr = month.toString().padStart(2, '0');
         const option = document.createElement('option');
@@ -53,9 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Hàm lọc và hiển thị dữ liệu theo tháng (MM-YYYY)
     function updateDisplay(month) {
-        const filteredRevenues = revenues.filter(r => {
+        let filteredRevenues = revenues.filter(r => {
             const [rMonth] = r.date.split('-');
-            return rMonth === month.split('-')[0]; 
+            return month === 'allMonths' || rMonth === month.split('-')[0];
         });
         const total = filteredRevenues.reduce((sum, r) => sum + parseFloat(r.amount.replace('$', '')), 0);
         totalRevenueSpan.textContent = `$${total.toFixed(2)}`;
@@ -73,9 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const item = document.createElement('div');
                 item.className = 'transaction-item';
                 item.innerHTML = `
-                    <span class="icon">💵</span>
+                    <span class="icon">💰</span>
                     <span class="date">${rMonth}-2025</span>
-                    <span class="category">Salary</span>
+                    <span class="description">${revenue.description || 'Salary'}</span>
                     <span class="amount">${revenue.amount}</span>
                     <div class="actions">
                         <span class="icon edit" data-id="${index}">📝</span>
@@ -90,8 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Khởi tạo hiển thị với dữ liệu mẫu (chỉnh sửa định dạng)
     if (revenues.length === 0) {
         revenues = [
-            { date: '03', category: 'Salary', amount: '$60' },
-            { date: '03', category: 'Salary', amount: '$120' }
+            { date: '03', description: 'Salary', amount: '$60' },
+            { date: '03', description: 'Bonus', amount: '$120' }
         ];
         localStorage.setItem('revenues', JSON.stringify(revenues));
     }
@@ -106,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
     addRevenueBtn.addEventListener('click', (e) => {
         e.preventDefault();
         document.getElementById('modalMonth').value = monthSelect.value;
+        document.getElementById('modalDescription').value = '';
         document.getElementById('modalAmount').value = '';
         document.getElementById('amountError').style.display = 'none';
         modal.show();
@@ -115,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('addRevenueForm').addEventListener('submit', (e) => {
         e.preventDefault();
         const month = document.getElementById('modalMonth').value;
+        const description = document.getElementById('modalDescription').value.trim();
         const amount = document.getElementById('modalAmount').value.trim();
         const amountError = document.getElementById('amountError');
 
@@ -126,19 +142,17 @@ document.addEventListener('DOMContentLoaded', () => {
         amountError.style.display = 'none';
 
         const newRevenue = {
-            date: month.split('-')[0], // Chỉ lấy tháng
-            category: 'Salary',
+            date: month === 'allMonths' ? '01' : month.split('-')[0], // Mặc định ngày 01 nếu All Months
+            description: description || 'Salary',
             amount: `$${parseFloat(amount).toFixed(2)}`
         };
 
         // Kiểm tra xem đang thêm mới hay sửa
         const editIndex = parseInt(document.getElementById('addRevenueForm').getAttribute('data-edit-index'));
         if (editIndex >= 0) {
-            // Cập nhật bản ghi hiện tại
             revenues[editIndex] = newRevenue;
             document.getElementById('addRevenueForm').removeAttribute('data-edit-index');
         } else {
-            // Thêm bản ghi mới
             revenues.push(newRevenue);
         }
         localStorage.setItem('revenues', JSON.stringify(revenues));
@@ -152,6 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const index = parseInt(e.target.getAttribute('data-id'));
             const revenue = revenues[index];
             document.getElementById('modalMonth').value = `${revenue.date}-2025`;
+            document.getElementById('modalDescription').value = revenue.description;
             document.getElementById('modalAmount').value = revenue.amount.replace('$', '');
             document.getElementById('amountError').style.display = 'none';
             document.getElementById('addRevenueForm').setAttribute('data-edit-index', index);
@@ -194,6 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target.classList.contains('add-revenue-link')) {
             e.preventDefault();
             document.getElementById('modalMonth').value = monthSelect.value;
+            document.getElementById('modalDescription').value = '';
             document.getElementById('modalAmount').value = '';
             document.getElementById('amountError').style.display = 'none';
             modal.show();
