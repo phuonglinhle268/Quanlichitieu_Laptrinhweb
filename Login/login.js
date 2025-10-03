@@ -1,5 +1,17 @@
 let users = JSON.parse(localStorage.getItem('users')) || [];
 
+// Tài khoản admin mặc định
+if (!users.some(u => u.email === "tiendat@gmail.com")) {
+    users.push({
+        name: "Administrator",
+        email: "tiendat@gmail.com",
+        password: "tiendat123",
+        role: "admin",
+        createdAt: new Date().toLocaleString()
+    });
+    localStorage.setItem('users', JSON.stringify(users));
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('loginForm');
     const emailError = document.getElementById('emailError');
@@ -49,7 +61,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 localStorage.setItem('loggedInUser', JSON.stringify(user));
-                window.location.href = '/Main/Overview/overview.html';
+
+                // Khởi tạo dữ liệu nếu chưa có
+                if (!localStorage.getItem(`expenses_${email}`)) {
+                    localStorage.setItem(`expenses_${email}`, JSON.stringify([]));
+                }
+                if (!localStorage.getItem(`revenues_${email}`)) {
+                    localStorage.setItem(`revenues_${email}`, JSON.stringify([]));
+                }
+
+                // Phân quyền
+                if (user.role === "admin") {
+                    window.location.href = "../Admin/admin.html";
+                } else {
+                    window.location.href = "../Main/Overview/overview.html";
+                }
             }
         });
     });

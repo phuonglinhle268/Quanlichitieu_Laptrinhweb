@@ -8,20 +8,25 @@
     <link rel="stylesheet" href="./login.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
+
 <body>
     <div class="header">
-        <h3>Expense Tracker</h3>
-        <a href="./login.html" class="btn btn-light">Login</a>
+
+        <h3 style="color: white;">
+            <span>📊</span> Theo dõi chi phí
+        </h3>
+
+        <a href="./login.html" class="btn btn-light">Đăng nhập</a>
     </div>
 
     <div class="login-container">
         <div class="login-card">
-            <h2>Login</h2>
+            <h2>Đăng nhập</h2>
             <div class="alert alert-success" id="logoutAlert" style="display: none;">
-                Logout successfully!
+                Đăng xuất thành công!
                 <span class="close">&times;</span>
             </div>
-           
+
             <form id="loginForm">
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -34,11 +39,11 @@
                     <div id="passwordError" class="error-message" style="display: none;"></div>
                 </div>
                 <button type="submit" class="btn btn-login">Login</button>
-               
+
                 <button class="btn btn-social">Facebook Login</button>
                 <button class="btn btn-google">Google Login</button>
-             
-                <p>No Account? <a href="../Register/register.html" class="register-link">Register</a></p>
+
+                <p>Bạn chưa có tài khoản ? <a href="../Register/register.html" class="register-link">Đăng ký</a></p>
             </form>
         </div>
     </div>
@@ -55,16 +60,17 @@
                 logoutAlert.style.display = 'block';
                 setTimeout(() => {
                     logoutAlert.style.display = 'none';
-                    localStorage.removeItem('justLoggedOut'); 
-                }, 3000); 
+                    localStorage.removeItem('justLoggedOut');
+                }, 3000);
             }
 
             // Xử lý nút đóng thông báo
             closeBtn.addEventListener('click', () => {
                 logoutAlert.style.display = 'none';
-                localStorage.removeItem('justLoggedOut'); 
+                localStorage.removeItem('justLoggedOut');
             });
         });
     </script>
 </body>
+
 </html>

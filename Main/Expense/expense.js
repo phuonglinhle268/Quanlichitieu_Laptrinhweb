@@ -1,7 +1,13 @@
-// Lưu dữ liệu expense trong localStorage
-let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
-
 document.addEventListener('DOMContentLoaded', () => {
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser) {
+        alert('Vui lòng đăng nhập trước!');
+        window.location.href = '../Login/login.html';
+        return;
+    }
+
+    let expenses = JSON.parse(localStorage.getItem(`expenses_${loggedInUser.email}`)) || [];
+
     const monthSelect = document.getElementById('monthSelect');
     const transactionList = document.getElementById('transactionList');
     const totalExpenseSpan = document.querySelector('.total-expenses-card .total-amount span');
@@ -118,15 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Khởi tạo hiển thị với dữ liệu mẫu
-    if (expenses.length === 0) {
-        expenses = [
-            { date: '03-01', name: 'Grocery', category: 'food', amount: '$1800' },
-            { date: '03-01', name: 'Snack', category: 'food', amount: '$500' },
-            { date: '04-02', name: 'Miscellaneous', category: 'other', amount: '$1800' },
-            { date: '05-03', name: 'Test', category: 'other', amount: '$0' }
-        ];
-        localStorage.setItem('expenses', JSON.stringify(expenses));
-    }
+    // Không cần khởi tạo dữ liệu mẫu nữa để tránh trùng lặp
     updateDisplay(monthSelect.value, categorySelect.value);
 
     // Xử lý thay đổi tháng
@@ -205,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             expenses.push(newExpense);
         }
-        localStorage.setItem('expenses', JSON.stringify(expenses));
+        localStorage.setItem(`expenses_${loggedInUser.email}`, JSON.stringify(expenses));
         modal.hide();
         updateDisplay(monthSelect.value, categorySelect.value);
     });
@@ -254,7 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }).then((result) => {
                 if (result.isConfirmed) {
                     expenses.splice(globalIndex, 1);
-                    localStorage.setItem('expenses', JSON.stringify(expenses));
+                    localStorage.setItem(`expenses_${loggedInUser.email}`, JSON.stringify(expenses));
                     updateDisplay(monthSelect.value, categorySelect.value);
                     Swal.fire({
                         title: 'Xóa thành công!',

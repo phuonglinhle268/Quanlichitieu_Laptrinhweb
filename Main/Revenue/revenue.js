@@ -1,7 +1,13 @@
-// Lưu dữ liệu revenue trong localStorage
-let revenues = JSON.parse(localStorage.getItem('revenues')) || [];
-
 document.addEventListener('DOMContentLoaded', () => {
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser) {
+        alert('Vui lòng đăng nhập trước!');
+        window.location.href = '../Login/login.html';
+        return;
+    }
+
+    let revenues = JSON.parse(localStorage.getItem(`revenues_${loggedInUser.email}`)) || [];
+
     const monthSelect = document.getElementById('month');
     const transactionList = document.getElementById('transactionList');
     const totalRevenueSpan = document.getElementById('totalRevenue');
@@ -9,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const revenueForm = document.getElementById('revenueForm');
     const addRevenueBtn = document.querySelector('.btn-revenue');
 
-    // Tạo modal cho form thêm/sửa
     const addRevenueModal = document.createElement('div');
     addRevenueModal.className = 'modal fade';
     addRevenueModal.id = 'addRevenueModal';
@@ -51,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(addRevenueModal);
     const modal = new bootstrap.Modal(addRevenueModal);
 
-    // Tạo option cho các tháng trong 2025 (định dạng MM-YYYY)
     const allMonthsOption = document.createElement('option');
     allMonthsOption.value = 'allMonths';
     allMonthsOption.text = 'All Months';
@@ -63,9 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
         option.text = `${monthStr}-2025`;
         monthSelect.appendChild(option);
     }
-    monthSelect.value = '03-2025'; // Mặc định là tháng 3-2025
+    monthSelect.value = '03-2025';
 
-    // Hàm lọc và hiển thị dữ liệu theo tháng (MM-YYYY)
     function updateDisplay(month) {
         let filteredRevenues = revenues.filter(r => {
             const [rMonth] = r.date.split('-');
@@ -101,22 +104,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Khởi tạo hiển thị với dữ liệu mẫu (chỉnh sửa định dạng)
-    if (revenues.length === 0) {
-        revenues = [
-            { date: '03', description: 'Salary', amount: '$60' },
-            { date: '03', description: 'Bonus', amount: '$120' }
-        ];
-        localStorage.setItem('revenues', JSON.stringify(revenues));
-    }
+    // Không khởi tạo dữ liệu mẫu để tránh dữ liệu cũ
     updateDisplay(monthSelect.value);
 
-    // Xử lý thay đổi tháng
     monthSelect.addEventListener('change', () => {
         updateDisplay(monthSelect.value);
     });
 
-    // Mở modal khi nhấn Add Revenue
     addRevenueBtn.addEventListener('click', (e) => {
         e.preventDefault();
         document.getElementById('modalMonth').value = monthSelect.value;
@@ -126,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.show();
     });
 
-    // Xử lý submit form trong modal (thêm hoặc sửa)
     document.getElementById('addRevenueForm').addEventListener('submit', (e) => {
         e.preventDefault();
         const month = document.getElementById('modalMonth').value;
@@ -142,12 +135,11 @@ document.addEventListener('DOMContentLoaded', () => {
         amountError.style.display = 'none';
 
         const newRevenue = {
-            date: month === 'allMonths' ? '01' : month.split('-')[0], // Mặc định ngày 01 nếu All Months
+            date: month === 'allMonths' ? '01' : month.split('-')[0],
             description: description || 'Salary',
             amount: `$${parseFloat(amount).toFixed(2)}`
         };
 
-        // Kiểm tra xem đang thêm mới hay sửa
         const editIndex = parseInt(document.getElementById('addRevenueForm').getAttribute('data-edit-index'));
         if (editIndex >= 0) {
             revenues[editIndex] = newRevenue;
@@ -155,12 +147,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             revenues.push(newRevenue);
         }
-        localStorage.setItem('revenues', JSON.stringify(revenues));
+        localStorage.setItem(`revenues_${loggedInUser.email}`, JSON.stringify(revenues));
         modal.hide();
         updateDisplay(monthSelect.value);
     });
 
-    // Xử lý sửa
     transactionList.addEventListener('click', (e) => {
         if (e.target.classList.contains('edit')) {
             const index = parseInt(e.target.getAttribute('data-id'));
@@ -173,7 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.show();
         }
 
-        // Xử lý xóa với thông báo thành công/thất bại
         if (e.target.classList.contains('delete')) {
             Swal.fire({
                 title: 'Chắc chắn chứ?',
@@ -186,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (result.isConfirmed) {
                     const index = parseInt(e.target.getAttribute('data-id'));
                     revenues.splice(index, 1);
-                    localStorage.setItem('revenues', JSON.stringify(revenues));
+                    localStorage.setItem(`revenues_${loggedInUser.email}`, JSON.stringify(revenues));
                     updateDisplay(monthSelect.value);
                     Swal.fire({
                         title: 'Xóa thành công!',
@@ -204,7 +194,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Xử lý nhấp vào "add revenue" trong alert
     transactionList.addEventListener('click', (e) => {
         if (e.target.classList.contains('add-revenue-link')) {
             e.preventDefault();

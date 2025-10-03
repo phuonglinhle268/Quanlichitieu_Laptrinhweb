@@ -1,7 +1,16 @@
-let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
-let revenues = JSON.parse(localStorage.getItem('revenues')) || [];
-
 document.addEventListener('DOMContentLoaded', () => {
+    // Lấy thông tin người dùng đăng nhập
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser) {
+        alert('Vui lòng đăng nhập trước!');
+        window.location.href = '../Login/login.html';
+        return;
+    }
+
+    // Lấy dữ liệu expense và revenue theo email người dùng
+    let expenses = JSON.parse(localStorage.getItem(`expenses_${loggedInUser.email}`)) || [];
+    let revenues = JSON.parse(localStorage.getItem(`revenues_${loggedInUser.email}`)) || [];
+
     const monthSelect = document.getElementById('monthSelect');
     const categorySelect = document.getElementById('categorySelect');
     const expensesValue = document.getElementById('expensesValue');
@@ -192,10 +201,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (result.isConfirmed) {
                     if (type === 'expense') {
                         expenses.splice(globalIndex, 1);
-                        localStorage.setItem('expenses', JSON.stringify(expenses));
+                        localStorage.setItem(`expenses_${loggedInUser.email}`, JSON.stringify(expenses));
                     } else {
                         revenues.splice(globalIndex, 1);
-                        localStorage.setItem('revenues', JSON.stringify(revenues));
+                        localStorage.setItem(`revenues_${loggedInUser.email}`, JSON.stringify(revenues));
                     }
                     updateData(monthSelect.value, categorySelect.value);
                     Swal.fire('Deleted!', 'Xóa thành công!', 'success');

@@ -11,17 +11,21 @@
 </head>
 <body>
     <div class="header">
-        <h3>Expense Tracker</h3>
+       <h3 style="color: white;">
+            <span>📊</span> Theo dõi chi phí
+        </h3>
         <div class="nav-links">
-            <a href="./overview.html" class="nav-link active">Overview</a>
-            <a href="../Expense/expense.html" class="nav-link">Expense</a>
-            <a href="../Revenue/revenue.html" class="nav-link">Revenue</a>
+            <a href="./overview.html" class="nav-link active">Tổng quan</a>
+            <a href="../Expense/expense.html" class="nav-link">Chi phí</a>
+            <a href="../Revenue/revenue.html" class="nav-link">Doanh thu</a>
+            <!-- <a href="../../Admin/admin.html" class="nav-link">Admin</a> -->
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="icon">🌱</span>
+                    <span class="icon">🌐</span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="#" id="logoutLink">Log out</a></li>
+                    <li><a class="dropdown-item" href="../Profile/profile.html" id="profileLink">Hồ sơ cá nhân</a></li>
+                    <li><a class="dropdown-item" href="../../Login/login.html" id="logoutLink">Đăng xuất</a></li>
                 </ul>
             </div>
         </div>
@@ -34,13 +38,13 @@
             </div>
             <div class="col-md-3">
                 <select class="form-select" id="categorySelect">
-                    <option value="all">All Categories</option>
-                    <option value="home">Home</option>
-                    <option value="transportation">Transportation</option>
-                    <option value="entertainment">Entertainment</option>
-                    <option value="food">Food</option>
-                    <option value="other">Other</option>
-                    <option value="allMonths">All Months</option>
+                    <option value="all">Tất cả danh mục</option>
+                    <option value="home">Nhà</option>
+                    <option value="transportation">Vận chuyển</option>
+                    <option value="entertainment">Giải trí</option>
+                    <option value="food">Thực phẩm</option>
+                    <option value="other">Khác</option>
+                    <option value="allMonths">Tất cả tháng</option>
                 </select>
             </div>
         </div>
@@ -127,8 +131,8 @@
 
         <div class="card transactions-card mt-4">
             <div class="transaction-header">
-                <h4>Transactions</h4>
-                <span id="recordCount">Found 0 records</span>
+                <h4>Giao dịch</h4>
+                <span id="recordCount">Tìm thấy 0 bản ghi</span>
             </div>
             <div class="transaction-list" id="transactionList">
                 <!-- Dữ liệu sẽ được thêm động -->
@@ -143,7 +147,7 @@
             e.preventDefault();
             localStorage.removeItem('loggedInUser');
             localStorage.setItem('justLoggedOut', 'true');
-            window.location.href = '/Login/login.html';
+            window.location.href = '../../Login/login.html';
         });
     </script>
     <script src="overview.js"></script>
