@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (!loggedInUser) {
-        alert('Vui lòng đăng nhập trước!');
-        window.location.href = '../Login/login.html';
+        alert('Hãy đăng nhập trước đã nhé!');
+        window.location.href = '../../Login/login.html';
         return;
     }
 
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         option.text = `${monthStr}-2025`;
         monthSelect.appendChild(option);
     }
-    monthSelect.value = '03-2025'; // Mặc định là tháng 3-2025
+    monthSelect.value = '03-2025'; //để ban đầu là tháng 3
 
     // Hàm lọc và hiển thị dữ liệu theo tháng và category
     function updateDisplay(month, category) {
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return matchesMonth && matchesCategory;
         });
         const total = filteredExpenses.reduce((sum, e) => sum + parseFloat(e.amount.replace('$', '')), 0);
-        totalExpenseSpan.textContent = `$${total.toFixed(2)}`;
+        totalExpenseSpan.textContent = `$${total}`;
         recordCountSpan.textContent = `Found ${filteredExpenses.length} records`;
 
         transactionList.innerHTML = '';
@@ -123,8 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Khởi tạo hiển thị với dữ liệu mẫu
-    // Không cần khởi tạo dữ liệu mẫu nữa để tránh trùng lặp
+    // Không khởi tạo dữ liệu mẫu để tránh trùng lặp giữa các tài khoản
     updateDisplay(monthSelect.value, categorySelect.value);
 
     // Xử lý thay đổi tháng
@@ -192,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
             date: `${inputMonth}-${inputDay}`,
             name: name,
             category: category,
-            amount: `$${parseFloat(amount).toFixed(2)}`
+            amount: `$${parseFloat(amount)}`
         };
 
         // Kiểm tra xem đang thêm mới hay sửa
@@ -217,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return monthSelect.value === 'allMonths' || expMonth === selectedMonth;
             });
             const displayIndex = parseInt(e.target.getAttribute('data-id'));
-            const globalIndex = parseInt(e.target.getAttribute('data-global-id')); // Sử dụng global-id trực tiếp
+            const globalIndex = parseInt(e.target.getAttribute('data-global-id')); 
             const expense = expenses[globalIndex];
             if (expense) {
                 const [expMonth, expDay] = expense.date.split('-');
@@ -233,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Xử lý xóa với thông báo thành công/thất bại
+        // Xử lý xóa 
         if (e.target.classList.contains('delete')) {
             const [selectedMonth] = monthSelect.value.split('-');
             const filteredExpenses = expenses.filter(expense => {
@@ -241,14 +240,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 return monthSelect.value === 'allMonths' || expMonth === selectedMonth;
             });
             const displayIndex = parseInt(e.target.getAttribute('data-id'));
-            const globalIndex = parseInt(e.target.getAttribute('data-global-id')); // Sử dụng global-id trực tiếp
+            const globalIndex = parseInt(e.target.getAttribute('data-global-id')); 
             Swal.fire({
                 title: 'Chắc chắn chứ?',
                 text: 'Bạn sẽ xóa chi tiêu này chứ?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Yes',
-                cancelButtonText: 'No'
+                cancelButtonText: 'No',
+                customClass: {
+                    popup: 'swal-custom-popup',
+                    title: 'swal-custom-title',
+                    confirmButton: 'swal-custom-button',
+                    cancelButton: 'swal-custom-button'
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
                     expenses.splice(globalIndex, 1);
@@ -257,13 +262,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     Swal.fire({
                         title: 'Xóa thành công!',
                         icon: 'success',
-                        confirmButtonText: 'OK'
+                        confirmButtonText: 'OK',
+                        customClass: {
+                            popup: 'swal-custom-popup',
+                            title: 'swal-custom-title',
+                            confirmButton: 'swal-custom-button'
+                        }
                     });
                 } else {
                     Swal.fire({
                         title: 'Đã từ chối xóa!',
                         icon: 'error',
-                        confirmButtonText: 'OK'
+                        confirmButtonText: 'OK',
+                        customClass: {
+                            popup: 'swal-custom-popup',
+                            title: 'swal-custom-title',
+                            confirmButton: 'swal-custom-button'
+                        }
                     });
                 }
             });

@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (!loggedInUser) {
         alert('Vui lòng đăng nhập trước!');
-        window.location.href = '../Login/login.html';
+        window.location.href = '../../Login/login.html';
         return;
     }
 
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return month === 'allMonths' || rMonth === month.split('-')[0];
         });
         const total = filteredRevenues.reduce((sum, r) => sum + parseFloat(r.amount.replace('$', '')), 0);
-        totalRevenueSpan.textContent = `$${total.toFixed(2)}`;
+        totalRevenueSpan.textContent = `$${total}`;
         recordCountSpan.textContent = `Found ${filteredRevenues.length} records`;
 
         transactionList.innerHTML = '';
@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const newRevenue = {
             date: month === 'allMonths' ? '01' : month.split('-')[0],
             description: description || 'Salary',
-            amount: `$${parseFloat(amount).toFixed(2)}`
+            amount: `$${parseFloat(amount)}`
         };
 
         const editIndex = parseInt(document.getElementById('addRevenueForm').getAttribute('data-edit-index'));
@@ -171,7 +171,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Yes',
-                cancelButtonText: 'No'
+                cancelButtonText: 'No',
+                customClass: {
+                    popup: 'swal-custom-popup',
+                    title: 'swal-custom-title',
+                    confirmButton: 'swal-custom-button',
+                    cancelButton: 'swal-custom-button'
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
                     const index = parseInt(e.target.getAttribute('data-id'));
@@ -181,13 +187,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     Swal.fire({
                         title: 'Xóa thành công!',
                         icon: 'success',
-                        confirmButtonText: 'OK'
+                        confirmButtonText: 'OK',
+                        customClass: {
+                            popup: 'swal-custom-popup',
+                            title: 'swal-custom-title',
+                            confirmButton: 'swal-custom-button'
+                        }
                     });
                 } else {
                     Swal.fire({
                         title: 'Đã từ chối xóa!',
                         icon: 'error',
-                        confirmButtonText: 'OK'
+                        confirmButtonText: 'OK',
+                        customClass: {
+                            popup: 'swal-custom-popup',
+                            title: 'swal-custom-title',
+                            confirmButton: 'swal-custom-button'
+                        }
                     });
                 }
             });

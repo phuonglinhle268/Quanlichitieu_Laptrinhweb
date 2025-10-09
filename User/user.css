@@ -1,50 +1,266 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f8f9fa;
+  background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
   margin: 0;
   padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  color: #333;
 }
 
 .container {
   max-width: 900px;
-  background: #fff;
-  padding: 20px 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 15px rgba(52, 152, 219, 0.3);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.container:hover {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(52, 152, 219, 0.4);
+  transform: translateY(-5px);
+}
+
+/* Navbar (nếu có, từ HTML) */
+.navbar {
+  width: 100%;
+  background: linear-gradient(90deg, #2c3e50, #34495e);
+  padding: 15px 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.navbar:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  color: #fff;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+  color: #e74c3c;
+}
+
+.btn-outline-light {
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-weight: 500;
+  transition: all 0.4s ease;
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+.btn-outline-light:hover {
+  background: #e74c3c;
+  border-color: #e74c3c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
 }
 
 h2 {
-  font-weight: bold;
-  color: #333;
+  font-weight: 700;
+  color: #2c3e50;
   text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, #3498db, #e74c3c);
+  border-radius: 2px;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { width: 50px; }
+  50% { width: 60px; }
 }
 
 .table {
   margin-top: 20px;
-  border-radius: 8px;
+  border-radius: 15px;
   overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.table:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .table thead {
-  background-color: #212529;
-  color: white;
+  background: linear-gradient(90deg, #2c3e50, #3498db);
+  color: #fff;
+  font-weight: 600;
+}
+
+.table tbody tr {
+  transition: all 0.3s ease;
+  border-bottom: 1px solid #ecf0f1;
 }
 
 .table tbody tr:hover {
-  background-color: #f1f1f1;
-  transition: 0.3s;
+  background: linear-gradient(90deg, #ecf0f1, #ffffff);
+  transform: scale(1.02);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table tbody tr:nth-child(even) {
+  background: rgba(52, 152, 219, 0.05);
 }
 
 .table td, .table th {
   text-align: center;
   vertical-align: middle;
+  padding: 15px 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  font-size: 1rem;
+}
+
+.table th {
+  font-size: 1.1rem;
+  letter-spacing: 1px;
 }
 
 .btn-primary {
-  background-color: #1a2e5a;
-  border-radius: 20px;
+  background: linear-gradient(90deg, #3498db, #e74c3c);
+  border: none;
+  border-radius: 25px;
+  padding: 12px 25px;
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   cursor: pointer;
-}   
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+}
+
 .btn-primary:hover {
-  background-color: rgb(47, 45, 149);
+  background: linear-gradient(90deg, #e74c3c, #3498db);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(231, 76, 60, 0.5);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(52, 152, 219, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    max-width: 95%;
+    padding: 20px 15px;
+    margin: 10px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
+
+  .table {
+    font-size: 0.9rem;
+  }
+
+  .table th, .table td {
+    padding: 10px 8px;
+  }
+
+  .btn-primary {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .table, .table thead, .table tbody, .table th, .table td, .table tr {
+    display: block;
+  }
+
+  .table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .table tr {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .table td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  .table td:before {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    font-weight: 600;
+  }
+
+  .table td:nth-of-type(1):before { content: "#"; }
+  .table td:nth-of-type(2):before { content: "Tên"; }
+  .table td:nth-of-type(3):before { content: "Email"; }
+  .table td:nth-of-type(4):before { content: "Ngày đăng ký"; }
+
+  h2 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+  }
+
+  .btn-primary {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 }

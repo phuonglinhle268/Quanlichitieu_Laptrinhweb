@@ -1,11 +1,11 @@
 let users = JSON.parse(localStorage.getItem('users')) || [];
 
 // Tài khoản admin mặc định
-if (!users.some(u => u.email === "tiendat@gmail.com")) {
+if (!users.some(u => u.email === "admin@gmail.com")) {
     users.push({
-        name: "Administrator",
-        email: "tiendat@gmail.com",
-        password: "tiendat123",
+        name: "Admin",
+        email: "admin@gmail.com",
+        password: "admin123",
         role: "admin",
         createdAt: new Date().toLocaleString()
     });
@@ -54,29 +54,34 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        Swal.fire({
-            title: 'Đăng nhập thành công!',
-            icon: 'success',
-            confirmButtonText: 'OK'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                localStorage.setItem('loggedInUser', JSON.stringify(user));
+      Swal.fire({
+    title: 'Đăng nhập thành công!',
+    icon: 'success',
+    confirmButtonText: 'OK',
+    customClass: {
+        popup: 'swal-custom-popup',
+        title: 'swal-custom-title',
+        confirmButton: 'swal-custom-button'
+    }
+}).then((result) => {
+    if (result.isConfirmed) {
+        localStorage.setItem('loggedInUser', JSON.stringify(user));
 
-                // Khởi tạo dữ liệu nếu chưa có
-                if (!localStorage.getItem(`expenses_${email}`)) {
-                    localStorage.setItem(`expenses_${email}`, JSON.stringify([]));
-                }
-                if (!localStorage.getItem(`revenues_${email}`)) {
-                    localStorage.setItem(`revenues_${email}`, JSON.stringify([]));
-                }
+        // Khởi tạo dữ liệu nếu chưa có
+        if (!localStorage.getItem(`expenses_${email}`)) {
+            localStorage.setItem(`expenses_${email}`, JSON.stringify([]));
+        }
+        if (!localStorage.getItem(`revenues_${email}`)) {
+            localStorage.setItem(`revenues_${email}`, JSON.stringify([]));
+        }
 
-                // Phân quyền
-                if (user.role === "admin") {
-                    window.location.href = "../Admin/admin.html";
-                } else {
-                    window.location.href = "../Main/Overview/overview.html";
-                }
-            }
-        });
+        // Phân quyền
+        if (user.role === "admin") {
+            window.location.href = "../Admin/admin.html";
+        } else {
+            window.location.href = "../Main/Overview/overview.html";
+        }
+    }
+});
     });
 });

@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (!loggedInUser) {
         alert('Vui lòng đăng nhập trước!');
-        window.location.href = '../Login/login.html';
+        window.location.href = '../../Login/login.html';
         return;
     }
 
@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
         nameError.style.display = 'none';
         emailError.style.display = 'none';
 
-        // Validation
         let isValid = true;
 
         if (!editName.value.trim()) {
@@ -60,16 +59,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (isValid) {
-            // Hiển thị xác nhận trước khi lưu
+            //xác nhận thay đổi
             Swal.fire({
                 title: 'Xác nhận lưu thay đổi?',
                 text: "Bạn có chắc muốn cập nhật thông tin này?",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#4a90e2',
-                cancelButtonColor: '#d33',
                 confirmButtonText: 'Lưu',
-                cancelButtonText: 'Hủy'
+                cancelButtonText: 'Hủy',
+                customClass: {
+                    popup: 'swal-custom-popup',
+                    title: 'swal-custom-title',
+                    confirmButton: 'swal-custom-button',
+                    cancelButton: 'swal-custom-button'
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Cập nhật thông tin
@@ -91,13 +94,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     document.getElementById('userName').textContent = loggedInUser.name;
                     document.getElementById('userEmail').textContent = loggedInUser.email;
 
-                    // Hiển thị thông báo thành công
+                    // thông báo thành công
                     Swal.fire({
                         title: 'Lưu thành công!',
                         text: 'Thông tin của bạn đã được cập nhật.',
                         icon: 'success',
-                        confirmButtonColor: '#4a90e2',
-                        confirmButtonText: 'OK'
+                        confirmButtonText: 'OK',
+                        customClass: {
+                            popup: 'swal-custom-popup',
+                            title: 'swal-custom-title',
+                            confirmButton: 'swal-custom-button'
+                        }
                     }).then(() => {
                         // Đóng modal sau khi xác nhận
                         bootstrap.Modal.getInstance(document.getElementById('editProfileModal')).hide();

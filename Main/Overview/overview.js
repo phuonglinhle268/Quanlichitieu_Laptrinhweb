@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (!loggedInUser) {
         alert('Vui lòng đăng nhập trước!');
-        window.location.href = '../Login/login.html';
+        window.location.href = '../../Login/login.html';
         return;
     }
 
@@ -80,9 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalRevenues = category !== 'all' && category !== 'allMonths' ? 0 : filteredRevenues.reduce((sum, r) => sum + parseFloat(r.amount.replace('$', '')), 0);
         const balance = totalRevenues - totalExpenses;
 
-        expensesValue.textContent = `$${totalExpenses.toFixed(2)}`;
-        revenuesValue.textContent = `$${totalRevenues.toFixed(2)}`;
-        balanceValue.textContent = `$${balance.toFixed(2)}`;
+        expensesValue.textContent = `$${totalExpenses}`;
+        revenuesValue.textContent = `$${totalRevenues}`;
+        balanceValue.textContent = `$${balance}`;
 
         // Ẩn monthly limit và remaining khi chọn All Months hoặc category cụ thể
         if (month === 'allMonths' || (category !== 'all' && category !== 'allMonths')) {
@@ -125,12 +125,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const icon = { 'home': '🏠', 'transportation': '🚗', 'entertainment': '🎮', 'food': '🍴', 'other': '✏️' }[cat];
                 const item = document.createElement('div');
                 item.className = 'category-item';
-                item.innerHTML = `<span class="icon">${icon}</span><span>${cat}</span><span>$${amount.toFixed(2)}</span>`;
+                item.innerHTML = `<span class="icon">${icon}</span><span>${cat}</span><span>$${amount}</span>`;
                 categoryList.appendChild(item);
             });
         } else {
             categoriesChartContainer.style.display = 'none';
-            categoryList.innerHTML = `<div class="category-item"><span class="icon">${{ 'home': '🏠', 'transportation': '🚗', 'entertainment': '🎮', 'food': '🍴', 'other': '✏️' }[category]}</span><span>${category}</span><span>$${totalExpenses.toFixed(2)}</span></div>`;
+            categoryList.innerHTML = `<div class="category-item"><span class="icon">${{ 'home': '🏠', 'transportation': '🚗', 'entertainment': '🎮', 'food': '🍴', 'other': '✏️' }[category]}</span><span>${category}</span><span>$${totalExpenses}</span></div>`;
         }
 
         const barLabels = month === 'allMonths' ? ['Total'] : [month];
@@ -174,7 +174,14 @@ document.addEventListener('DOMContentLoaded', () => {
             inputValue: parseFloat(monthlyLimit.textContent.replace('$', '').replace(',', '')),
             showCancelButton: true,
             confirmButtonText: 'Save',
-            cancelButtonText: 'Cancel'
+            cancelButtonText: 'Cancel',
+            customClass: {
+                popup: 'swal-custom-popup',
+                title: 'swal-custom-title',
+                confirmButton: 'swal-custom-button',
+                cancelButton: 'swal-custom-button',
+                input: 'swal-custom-input'
+            }
         }).then((result) => {
             if (result.isConfirmed) {
                 const newLimit = parseFloat(result.value) || 0;
@@ -196,7 +203,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Yes',
-                cancelButtonText: 'No'
+                cancelButtonText: 'No',
+                customClass: {
+                    popup: 'swal-custom-popup',
+                    title: 'swal-custom-title',
+                    confirmButton: 'swal-custom-button',
+                    cancelButton: 'swal-custom-button'
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
                     if (type === 'expense') {
@@ -207,7 +220,17 @@ document.addEventListener('DOMContentLoaded', () => {
                         localStorage.setItem(`revenues_${loggedInUser.email}`, JSON.stringify(revenues));
                     }
                     updateData(monthSelect.value, categorySelect.value);
-                    Swal.fire('Deleted!', 'Xóa thành công!', 'success');
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Xóa thành công!',
+                        icon: 'success',
+                        confirmButtonText: 'OK',
+                        customClass: {
+                            popup: 'swal-custom-popup',
+                            title: 'swal-custom-title',
+                            confirmButton: 'swal-custom-button'
+                        }
+                    });
                 }
             });
         }

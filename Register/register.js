@@ -1,10 +1,8 @@
-// Lấy danh sách user từ localStorage
 let users = JSON.parse(localStorage.getItem("users")) || [];
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("registerForm");
 
-  // Các phần tử DOM
   const emailExistsAlert = document.getElementById("emailExistsAlert");
   const closeBtn = document.querySelector(".alert-warning .close");
 
@@ -75,23 +73,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Nếu hợp lệ -> lưu user
     if (isValid) {
-      users.push({ name, email, password });
+      const newUser = {
+        name,
+        email,
+        password,
+        createdAt: new Date().toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" })
+      };
+      users.push(newUser);
       localStorage.setItem("users", JSON.stringify(users));
 
       // Khởi tạo dữ liệu mới cho user
       localStorage.setItem(`expenses_${email}`, JSON.stringify([]));
       localStorage.setItem(`revenues_${email}`, JSON.stringify([]));
 
-      Swal.fire({
-        title: "Đăng ký thành công!",
-        text: "Chuyển đến trang đăng nhập.",
-        icon: "success",
-        confirmButtonText: "OK",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = "../Login/login.html";
-        }
-      });
+     Swal.fire({
+    title: "Đăng ký thành công!",
+    text: "Chuyển đến trang đăng nhập.",
+    icon: "success",
+    confirmButtonText: "OK",
+    customClass: {
+        popup: 'swal-custom-popup',
+        title: 'swal-custom-title',
+        confirmButton: 'swal-custom-button'
+    }
+}).then((result) => {
+    if (result.isConfirmed) {
+        window.location.href = "../Login/login.html";
+    }
+});
     }
   });
 });

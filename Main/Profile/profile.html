@@ -13,24 +13,29 @@
     <header>
         <h1>💼 Hồ Sơ Cá Nhân</h1>
     </header>
-    <section class="container mt-4">
-        <div class="card p-4">
-            <h2 class="text-primary">Thông Tin Cá Nhân</h2>
-            <div class="mb-3">
-                <label class="form-label">Tên:</label>
-                <span id="userName" class="form-control-plaintext"></span>
+    <section class="container">
+        <div class="profile-card">
+            <div class="profile-header">
+                <h2 class="title">Thông Tin Cá Nhân</h2>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Email:</label>
-                <span id="userEmail" class="form-control-plaintext"></span>
+            <div class="profile-content">
+                <div class="info-group mb-4">
+                    <label class="info-label">Tên:</label>
+                    <span id="userName" class="info-value form-control-plaintext"></span>
+                </div>
+                <div class="info-group mb-4">
+                    <label class="info-label">Email:</label>
+                    <span id="userEmail" class="info-value form-control-plaintext"></span>
+                </div>
             </div>
-            <button class="btn btn-primary" id="editProfileBtn" data-bs-toggle="modal" data-bs-target="#editProfileModal">Chỉnh sửa</button>
-            <button class="btn btn-secondary mt-2" id="backButton">Quay lại</button>
+            <div class="button-group d-flex justify-content-end gap-3">
+                <button class="btn btn-primary" id="editProfileBtn" data-bs-toggle="modal" data-bs-target="#editProfileModal">Chỉnh sửa</button>
+                <button class="btn btn-secondary" id="backButton">Quay lại</button>
+            </div>
         </div>
 
-        <!-- Modal chỉnh sửa -->
         <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editProfileModalLabel">Chỉnh sửa Thông Tin</h5>
@@ -41,15 +46,17 @@
                             <div class="mb-3">
                                 <label for="editName" class="form-label">Tên</label>
                                 <input type="text" class="form-control" id="editName">
-                                <div id="nameError" class="text-danger" style="font-size: 0.9rem; display: none;"></div>
+                                <div id="nameError" class="text-danger" style="display: none;"></div>
                             </div>
                             <div class="mb-3">
                                 <label for="editEmail" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="editEmail" >
-                                <div id="emailError" class="text-danger" style="font-size: 0.9rem; display: none;"></div>
+                                <input type="email" class="form-control" id="editEmail">
+                                <div id="emailError" class="text-danger" style="display: none;"></div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Lưu</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                            <div class="button-group d-flex justify-content-end gap-3">
+                                <button type="submit" class="btn btn-primary">Lưu</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                            </div>
                         </form>
                     </div>
                 </div>

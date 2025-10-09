@@ -1,3 +1,201 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-x: hidden;
+  color: #333;
+}
+
+.main-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.navbar {
+  width: 100%;
+  background: linear-gradient(90deg, #2c3e50, #34495e);
+  padding: 15px 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.navbar:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  color: #fff;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+  color: #e74c3c;
+}
+
+.btn-outline-light {
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-weight: 500;
+  transition: all 0.4s ease;
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+.btn-outline-light:hover {
+  background: #e74c3c;
+  border-color: #e74c3c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+}
+
+.container {
+  max-width: 600px; /* Thu hẹp để tập trung vào card */
+  padding: 40px 50px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 25px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25), 0 0 20px rgba(52, 152, 219, 0.4);
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.6s ease-out;
+  text-align: center;
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.container:hover {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), 0 0 25px rgba(52, 152, 219, 0.5);
+  transform: translateY(-5px);
+}
+
+h2 {
+  font-weight: 700;
+  color: #2c3e50;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  padding-bottom: 15px;
+  margin-bottom: 30px;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #3498db, #e74c3c);
+  border-radius: 2px;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { width: 60px; }
+  50% { width: 70px; }
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  background: linear-gradient(135deg, #ffffff, #f9f9f9);
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 100%;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(52, 152, 219, 0.1) 0%, transparent 70%);
+  animation: glow 6s infinite;
+  z-index: 0;
+}
+
+@keyframes glow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card-body {
+  position: relative;
+  z-index: 1;
+}
+
+.card-title {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.card-text {
+  color: #7f8c8d;
+  font-size: 1rem;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #3498db, #e74c3c);
+  border: none;
+  border-radius: 25px;
+  padding: 12px 30px;
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 5px 20px rgba(52, 152, 219, 0.5);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, #e74c3c, #3498db);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(231, 76, 60, 0.6);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 15px rgba(52, 152, 219, 0.3);
 }
